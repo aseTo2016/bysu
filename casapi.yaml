@@ -1,0 +1,1107 @@
+openapi: 3.0.1
+info:
+  title: ServiceStage application deployment and operation management API
+  description: This is an Open API descriptor for Huawei ServiceStage application  deployment.
+    The operations cover the provsining life-cycle management broker APIs that allow
+    users to create, update and delete an application instance on the Huawei cloud.
+  version: "2.13"
+externalDocs:
+  description: Find out more about CAS service broker
+  url: http://office-service.huawei.com/DocView.aspx?did=bd722989-3955-46f7-b79f-19f4833807c6
+servers:
+  - url: https://servicestage.{region}.myhuaweicloud.com/v1
+paths:
+  /{project_id}/apps/service_instances/{instance_id}:
+    get:
+      tags:
+        - Application
+      summary: get application instance information
+      description: Get application instance detail information for a given project
+        ID and its service instance ID
+      operationId: getApplicationInfo
+      parameters:
+        - name: project_id
+          in: path
+          description: ID of the tenant's project on the cloud
+          required: true
+          schema:
+            type: string
+        - name: instance_id
+          in: path
+          description: ID of an application instance. A UUID string
+          required: true
+          schema:
+            type: string
+        - name: X-Auth-Token
+          in: header
+          description: Authentication Token
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/appinfo'
+        401:
+          description: Invalid username/password supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+        500:
+          description: Internal error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+    put:
+      tags:
+        - Application
+      summary: update an application instance
+      description: This API is used to update service plan, cpu/mem/disk, scale rules,
+        source code, war file, etc. The update may or may not require reprovisioning.
+      operationId: updateServiceInstance
+      parameters:
+        - name: project_id
+          in: path
+          description: ID of the tenant's project on the cloud
+          required: true
+          schema:
+            type: string
+        - name: instance_id
+          in: path
+          description: ID of an application instance. e.g. app3gdocdeg18gkg013d
+          required: true
+          schema:
+            type: string
+        - name: accepts_incomplete
+          in: query
+          description: Running provisioning asynchronizely, support true only
+          required: true
+          schema:
+            type: string
+            default: "true"
+        - name: X-Auth-Token
+          in: header
+          description: Authentication Token
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateParameters'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/updateParameters'
+        required: false
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/appresponse'
+        401:
+          description: Invalid username/password supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+        500:
+          description: Internal error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+    post:
+      tags:
+        - Application
+      summary: create an application instance
+      description: This is to provision a cloud application instance
+      operationId: provisionInstance
+      parameters:
+        - name: project_id
+          in: path
+          description: ID of the tenant's project on the cloud
+          required: true
+          schema:
+            type: string
+        - name: instance_id
+          in: path
+          description: ID of the service instance. A generated UUID
+          required: true
+          schema:
+            type: string
+        - name: accepts_incomplete
+          in: query
+          description: Running provisioning asynchronizely, either true or false
+          required: true
+          schema:
+            type: string
+            default: "true"
+        - name: X-Auth-Token
+          in: header
+          description: Authentication Token
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Provisioning parmeters that need to be added to the application
+          instance
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/provisionInstance'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/appresponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/appresponse'
+        401:
+          description: Unauthorized error
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+        405:
+          description: Validation exception
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+        412:
+          description: Incorrect broker version
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+        500:
+          description: Internal error
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+    delete:
+      tags:
+        - Application
+      summary: Delete an application instance
+      description: This is to deprovision a cloud application instance
+      operationId: deprovisionInstance
+      parameters:
+        - name: project_id
+          in: path
+          description: ID of the tenant's project on the cloud
+          required: true
+          schema:
+            type: string
+        - name: instance_id
+          in: path
+          description: ID of the service instance
+          required: true
+          schema:
+            type: string
+        - name: accepts_incomplete
+          in: query
+          description: Running provisioning asynchronizely, either true or false
+          required: true
+          schema:
+            type: string
+            default: "true"
+        - name: X-Auth-Token
+          in: header
+          description: Authentication Token
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/appresponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/appresponse'
+        401:
+          description: Unauthorized error
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+        405:
+          description: Validation exception
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+        412:
+          description: Incorrect broker version
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+        500:
+          description: Internal error
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+  /{project_id}/apps:
+    get:
+      tags:
+        - Application
+      summary: Get all application instances
+      description: Get all application instances for a given project ID
+      operationId: getApplications
+      parameters:
+        - name: project_id
+          in: path
+          description: ID of the tenant's project on the cloud
+          required: true
+          schema:
+            type: string
+        - name: X-Auth-Token
+          in: header
+          description: Authentication Token
+          required: true
+          schema:
+            type: string
+        - name: platform_type
+          in: query
+          description: Filter by platform type e.g. cce
+          schema:
+            type: string
+        - name: app_type
+          in: query
+          description: Filter by application type e.g. Tomcat8
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/apps'
+        401:
+          description: Invalid username/password supplied
+          content: {}
+        500:
+          description: Internal error
+          content: {}
+  /{project_id}/apps/service_instances/{instance_id}/logs:
+    get:
+      tags:
+        - Application
+      summary: Get application job and task details
+      description: Task logs can optionally be filtered by job-id and/or job-type.
+        Also, it's backed by offset pagination in case there are many records.
+      operationId: getAppTaskLogs
+      parameters:
+        - name: project_id
+          in: path
+          description: ID of the tenant's project on the cloud
+          required: true
+          schema:
+            type: string
+        - name: instance_id
+          in: path
+          description: ID of a service instance ID. e.g. app3gdocdeg18gkg013d
+          required: true
+          schema:
+            type: string
+        - name: X-Auth-Token
+          in: header
+          description: Authentication Token
+          required: true
+          schema:
+            type: string
+        - name: job_id
+          in: query
+          description: 'JobID is stored in both taskmgr_job and taskmgr_task tables:
+          e.g., JOB602d157d-e98d-49bd-bdcb-15f49f9df323'
+          schema:
+            type: string
+        - name: task_id
+          in: query
+          description: TaskID is the primary key of the taskmgr_task table, as, e.g.,
+            Task-5701507c-c9b8-44a5-9f3f-8751f92f5b7c
+          schema:
+            type: string
+        - name: job_type
+          in: query
+          description: 'Job types: PROVISION, UNPROVISION, DAILY_OPERATION, UNKNOWN'
+          style: form
+          explode: false
+          schema:
+            type: array
+            items:
+              type: string
+              default: unavailable
+              enum:
+                - PROVISION
+                - UNPROVISION
+                - DAILY_OPERATION
+                - UNKNOWN
+        - name: limit
+          in: query
+          description: An integer to limit the number of records returned
+          schema:
+            type: integer
+            default: 20
+        - name: offset
+          in: query
+          description: Retrieves records starting from offset
+          schema:
+            type: integer
+            default: 0
+        - name: orderby
+          in: query
+          description: order by data fields
+          schema:
+            type: string
+            default: lastCheck
+        - name: desc
+          in: query
+          description: order by decending or acending order
+          schema:
+            type: string
+            default: "true"
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/taskLog'
+        401:
+          description: Invalid username/password supplied
+          content: {}
+        500:
+          description: Internal error
+          content: {}
+  /{project_id}/apps/service_instances/{instance_id}/revisions:
+    get:
+      tags:
+        - Application
+      summary: Get application revisions
+      description: Application revisions.
+      operationId: appRevisions
+      parameters:
+        - name: project_id
+          in: path
+          description: ID of the tenant's project on the cloud
+          required: true
+          schema:
+            type: string
+        - name: instance_id
+          in: path
+          description: ID of a service instance ID. e.g. app3gdocdeg18gkg013d
+          required: true
+          schema:
+            type: string
+        - name: X-Auth-Token
+          in: header
+          description: Authentication Token
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/apprevisions'
+        401:
+          description: Invalid username/password supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+        500:
+          description: Internal error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+  /{project_id}/apps/metadata/types:
+    get:
+      tags:
+        - Application Metadata
+      summary: Get supported application types
+      description: All available application types that can be used
+      operationId: appTypes
+      parameters:
+        - name: project_id
+          in: path
+          description: ID of the tenant's project on the cloud
+          required: true
+          schema:
+            type: string
+        - name: X-Auth-Token
+          in: header
+          description: Authentication Token
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/apptypes'
+        401:
+          description: Invalid username/password supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+        500:
+          description: Internal error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+  /{project_id}/apps/metadata/sizes:
+    get:
+      tags:
+        - Application Metadata
+      summary: Get supported application sizes
+      description: All available application sizes. e.g. micro, small, large, xlarge
+      operationId: appSizes
+      parameters:
+        - name: project_id
+          in: path
+          description: ID of the tenant's project on the cloud
+          required: true
+          schema:
+            type: string
+        - name: X-Auth-Token
+          in: header
+          description: Authentication Token
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/appsizes'
+        401:
+          description: Invalid username/password supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+        500:
+          description: Internal error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+
+components:
+  schemas:
+    taskLog:
+      type: object
+      properties:
+        job_id:
+          type: string
+        job_name:
+          type: string
+        job_type:
+          type: string
+        service_instance_id:
+          type: string
+        project_id:
+          type: string
+        order_id:
+          type: string
+        job_desc:
+          type: string
+        execution_status:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        created_by:
+          type: string
+        task_id:
+          type: string
+        task_type:
+          type: string
+        task_index:
+          type: string
+        task_name:
+          type: string
+        task_status:
+          type: string
+        last_health_check:
+          type: string
+          format: date-time
+        owner_id:
+          type: string
+    appsizes:
+      type: object
+      properties:
+        flavor_id:
+          type: string
+          example: MICRO-5G:0.5C:1G
+        storage_size:
+          type: string
+          example: 5G
+        num_cpu:
+          type: string
+          example: 500m
+        memory_size:
+          type: string
+          example: 1G
+        label:
+          type: string
+          example: 'Micro: 5G Storage, 0.5 CPU, 1G Memory'
+    appresponse:
+      type: object
+      properties:
+        instance_id:
+          type: string
+        job_id:
+          type: string
+        message:
+          type: string
+    errorResponse:
+      required:
+        - error_code
+        - error_msg
+      type: object
+      properties:
+        error_code:
+          type: string
+        error_msg:
+          type: string
+        error_detail:
+          type: string
+        suggestion:
+          type: string
+      example:
+        error_code: SVCSTG.CAS.{HTTP_CODE}1000
+        error_mssage: Some error messages
+        error_detail: Error details.
+        suggestion: Contact Huawei Cloud Support.
+    provisionInstance:
+      required:
+        - context
+        - organization_guid
+        - parameters
+        - plan_id
+        - service_id
+        - space_guid
+      type: object
+      properties:
+        service_id:
+          type: string
+        plan_id:
+          type: string
+        organization_guid:
+          type: string
+        space_guid:
+          type: string
+        context:
+          required:
+            - order_id
+          type: object
+          properties:
+            order_id:
+              type: string
+        parameters:
+          required:
+            - name
+            - version
+            - size
+            - source
+            - type
+            - category
+            - platform_type
+            - platforms
+          type: object
+          properties:
+            name:
+              type: string
+            display_name:
+              type: string
+            description:
+              type: string
+            type:
+              type: string
+            version:
+              type: string
+            platform_type:
+              type: string
+            group_id:
+              type: string
+            category:
+              type: string
+              enum:
+                - ServiceComb
+                - Webapp
+                - Mobile
+            size:
+              type: object
+              properties:
+                id:
+                  type: string
+                replica:
+                  type: integer
+            listener_port:
+              type: integer
+            source:
+              $ref: '#/components/schemas/source'
+            services:
+              $ref: '#/components/schemas/appintegratedservices'
+            platforms:
+              $ref: '#/components/schemas/platforms'
+            extended_param:
+              type: object
+              additionalProperties: true
+      example:
+        service_id: SRV238CASUFGHI09314A
+        plan_id: cas-pay2go
+        organization_guid: abc_guid
+        space_guid: abc_guid
+        context:
+          order_id: ord123
+        parameters:
+          version: "1.0.0"
+          display_name: ACME online store
+          type: Tomcat8
+          platform_type: cce
+          category: Webapp
+          listener_port: 8080
+          description: What my app does ...
+          size:
+            id: STANDARD-30G:2.0C:4G
+            replica: 1
+          source:
+            kind: artifact
+            spec:
+              app_name:
+                storage: swr
+                type: package
+                url: >-
+                  https://100.125.5.235:20202/swr/v2/domains/d1/namespaces/nodel02/repositories/repo/packages/jar/versions/3.0/file_paths/WebApp-0.0.1-SNAPSHOT.jar
+                auth: iam
+                version: 3
+                artifact_namespace: default
+          extended_param:
+            enterprise_project_id: 0
+          platforms:
+            cce:
+              id: 7e1f8760-211b-11e9-98e4-0255ac101e1d
+              parameters:
+                namespace: default
+            elb:
+              id: 0bf0247d-2321-4c4c-b770-55e34c8b5fb4
+    apprevisions:
+      type: object
+      properties:
+        action:
+          type: string
+          example: Provision
+        active:
+          type: boolean
+          example: false
+          default: false
+        created_at:
+          type: string
+          format: date-time
+        spec:
+          $ref: '#/components/schemas/provisionInstance'
+        version:
+          type: integer
+          example: 2
+    updateParameters:
+      type: object
+      properties:
+        parameters:
+          type: object
+          properties:
+            size:
+              type: object
+              properties:
+                replica:
+                  type: integer
+                id:
+                  type: string
+            description:
+              type: string
+            version:
+              type: string
+            source:
+              $ref: '#/components/schemas/source'
+            display_name:
+              type: string
+            extended_param:
+              type: object
+              properties: {}
+      example:
+        parameters:
+          display_name: Updated display name [optional]
+          description: Updated description [optional]
+          version: 1.0.1
+          size:
+            id: MICRO-5G:0.5C:1G
+            replica: 2
+          source:
+            kind: code
+            spec:
+              repo_type: GitHub
+              repo_url: http://10.122.253.128/cas/cas-mock-war.git
+              repo_namespace: mynamespace
+              proj_branch: master
+              secu_token: cas:CloudPaaS
+              artifact_namespace: cas-abdedfed
+    appinfo:
+      type: object
+      properties:
+        instance_id:
+          type: string
+        project_id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        version:
+          type: string
+          example: 1.0.0
+        group_id:
+          type: string
+          example: f19c320e-f9ff-4d83-ad14-f5fc91fa41a8
+        display_name:
+          type: string
+        app_type:
+          type: string
+          example: Java8
+        platform_type:
+          type: string
+          example: cce
+        replica:
+          type: integer
+          example: 1
+        url:
+          type: string
+        flavor_id:
+          type: string
+          example: MICRO-5G:0.5C:1G
+        assembling_job_id:
+          type: string
+        status:
+          type: string
+          description: Current Application Status
+          enum:
+            - INITIALIZING
+            - FAILED
+            - RUNNING
+            - DOWN
+            - DELETING
+            - DELETED
+            - STAGING
+            - STARTING
+            - STOPPING
+            - STOPPED
+            - RESTARTING
+            - PENDING
+            - PARTIALLY_FAILED
+            - UNKNOWN
+        created_at:
+          type: string
+          format: date-time
+        last_update_at:
+          type: string
+          format: date-time
+        listener_port:
+          type: integer
+        source:
+          $ref: '#/components/schemas/source'
+        platforms:
+          $ref: '#/components/schemas/platforms'
+        services:
+          $ref: '#/components/schemas/appintegratedservices'
+    appintegratedservices:
+      properties:
+        distributed_session:
+          type: string
+        relational_database:
+          type: string
+      type: object
+      additionalProperties:
+        type: object
+        properties:
+          desc:
+            type: string
+          instances:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: string
+                parameters:
+                  type: object
+                  additionalProperties: true
+      example:
+        distributed_session:
+          desc: Distributed caching session
+          instances:
+            - id: 9fd9b4cb-057c-4bf2-be6e-581a3216d96f
+              parameters:
+                cluster: "false"
+                password: test123
+        relational_database:
+          desc: Relational Database Service
+          instances:
+            - id: ddaaa82dcea04b44b839e1529d1989cdno01
+              parameters:
+                connection_type: SPRING_CLOUD_CONNECTOR
+                db_name: musicdb
+                db_user: dbuser
+                password: "******"
+    apptypes:
+      type: object
+      properties:
+        type_name:
+          type: string
+          example: Tomcat8
+        base_image_repo:
+          type: string
+          example: /cas-builds/tomcat8-session-redis:latest
+        container_default_port:
+          type: integer
+          example: 8080
+        type_desc:
+          type: string
+          example: Tomcat runtime server (Java servlet 4.0) with Java 8 supported
+        display_name:
+          type: string
+          example: Tomcat8
+    apps:
+      type: object
+      properties:
+        instance_id:
+          type: string
+        project_id:
+          type: string
+        name:
+          type: string
+        version:
+          type: string
+        display_name:
+          type: string
+        app_type:
+          type: string
+        platform_type:
+          type: string
+        url:
+          type: string
+        replica:
+          type: integer
+        status:
+          type: string
+          description: Current Application Status
+          enum:
+            - INITIALIZING
+            - FAILED
+            - RUNNING
+            - DOWN
+            - DELETING
+            - DELETED
+            - STAGING
+            - STARTING
+            - STOPPING
+            - STOPPED
+            - RESTARTING
+            - PENDING
+            - PARTIALLY_FAILED
+            - UNKNOWN
+        reason:
+          type: string
+          description: reason for application partially failed
+        created_at:
+          type: string
+          format: date-time
+        last_update_at:
+          type: string
+          format: date-time
+        assembling_job_id:
+          type: string
+    platforms:
+      type: object
+      properties:
+        id:
+          type: string
+        parameters:
+          type: object
+          additionalProperties:
+            type: string
+      example:
+        vpc:
+          id: 32d823b8-7980-4690-8be0-a03018cc3756
+        cce:
+          id: 42d7c666-c0e6-11e8-8c28-0255ac101f1d
+          parameters:
+            namespace: default
+        elb:
+          id: a6e76b8a-6fe1-4a7f-9f17-95b473d34f2c
+    source:
+      type: object
+      properties:
+        kind:
+          type: string
+          enum:
+            - code
+            - artifact
+            - framework
+            - template
+          description: source kind
+        spec:
+          oneOf:
+            - $ref: '#/components/schemas/code'
+            - $ref: '#/components/schemas/artifact'
+            - $ref: '#/components/schemas/framework'
+            - $ref: '#/components/schemas/template'
+      example:
+        kind: artifact
+        spec:
+          app_name:
+            storage: swr
+            type: package
+            url: >-
+              https://100.125.5.235:20202/swr/v2/domains/d1/namespaces/nodel02/repositories/repo/packages/jar/versions/3.0/file_paths/WebApp-0.0.1-SNAPSHOT.jar
+            auth: iam
+            version: 3
+            artifact_namespace: default
+    code:
+      type: object
+      properties:
+        repo_type:
+          type: string
+          enum:
+            - GitHub
+            - GitLab
+            - Gitee
+            - Bitbucket
+            - DevCloud
+          example: GitHub
+        repo_url:
+          type: string
+        repo_namespace:
+          type: string
+        proj_branch:
+          type: string
+        secu_token:
+          type: string
+        artifact_namespace:
+          type: string
+          description: artifact archive namespace
+    artifact:
+      type: object
+      additionalProperties:
+        type: object
+        properties:
+          storage:
+            type: string
+            enum:
+              - swr
+              - devcloud
+              - obs
+              - custom
+          type:
+            type: string
+            enum:
+              - image
+              - package
+          url:
+            type: string
+          auth:
+            type: string
+            default: iam
+          version:
+            type: string
+          artifact_namespace:
+            type: string
+            description: artifact archive namespace
+    framework:
+      type: object
+      properties:
+        framework:
+          type: string
+        repo_type:
+          type: string
+        repo_home:
+          type: string
+        repo_username:
+          type: string
+        repo_namespace_id:
+          type: string
+        repo_namespace:
+          type: string
+        repo_name:
+          type: string
+        secu_token:
+          type: string
+        artifact_namespace:
+          type: string
+    template:
+      type: object
+      properties:
+        template:
+          type: string
