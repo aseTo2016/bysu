@@ -11,7 +11,7 @@ externalDocs:
 servers:
   - url: https://servicestage.{region}.myhuaweicloud.com/v1
 paths:
-  /{project_id}/apps/service_instances/{instance_id}:
+  /cas/{project_id}/apps/service_instances/{instance_id}:
     get:
       tags:
         - Application
@@ -282,7 +282,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/errorResponse'
-  /{project_id}/apps:
+  /cas/{project_id}/apps:
     get:
       tags:
         - Application
@@ -327,7 +327,7 @@ paths:
         500:
           description: Internal error
           content: {}
-  /{project_id}/apps/service_instances/{instance_id}/logs:
+  /cas/{project_id}/apps/service_instances/{instance_id}/logs:
     get:
       tags:
         - Application
@@ -420,7 +420,7 @@ paths:
         500:
           description: Internal error
           content: {}
-  /{project_id}/apps/service_instances/{instance_id}/revisions:
+  /cas/{project_id}/apps/service_instances/{instance_id}/revisions:
     get:
       tags:
         - Application
@@ -467,7 +467,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/errorResponse'
-  /{project_id}/apps/metadata/types:
+  /cas/{project_id}/apps/metadata/types:
     get:
       tags:
         - Application Metadata
@@ -508,7 +508,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/errorResponse'
-  /{project_id}/apps/metadata/sizes:
+  /cas/{project_id}/apps/metadata/sizes:
     get:
       tags:
         - Application Metadata
@@ -706,7 +706,7 @@ components:
             source:
               $ref: '#/components/schemas/source'
             services:
-              $ref: '#/components/schemas/appintegratedservices'
+              $ref: '#/components/schemas/appIntegratedServices'
             platforms:
               $ref: '#/components/schemas/platforms'
             extended_param:
@@ -875,14 +875,12 @@ components:
         platforms:
           $ref: '#/components/schemas/platforms'
         services:
-          $ref: '#/components/schemas/appintegratedservices'
-    appintegratedservices:
-      properties:
-        distributed_session:
-          type: string
-        relational_database:
-          type: string
+          $ref: '#/components/schemas/appIntegratedServices'
+    appIntegratedServices:
       type: object
+      required:
+        - distributed_session
+        - relational_database
       additionalProperties:
         type: object
         properties:
@@ -1013,11 +1011,7 @@ components:
             - template
           description: source kind
         spec:
-          oneOf:
-            - $ref: '#/components/schemas/code'
-            - $ref: '#/components/schemas/artifact'
-            - $ref: '#/components/schemas/framework'
-            - $ref: '#/components/schemas/template'
+          $ref: '#/components/schemas/code'
       example:
         kind: artifact
         spec:
