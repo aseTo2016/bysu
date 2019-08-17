@@ -13,7 +13,7 @@ externalDocs:
 servers:
   - url: https://servicestage.{region}.myhuaweicloud.com/v1
 paths:
-  /cas/{project_id}/apps/groups:
+  /{project_id}/apps/groups:
     get:
       tags:
         - Application Group
@@ -121,7 +121,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/errorResponse'
-  /cas/{project_id}/apps/groups/{group_id}:
+  /{project_id}/apps/groups/{group_id}:
     get:
       tags:
         - Application Group
@@ -301,7 +301,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/errorResponse'
-  /cas/{project_id}/apps/groups/{group_id}/logs:
+  /{project_id}/apps/groups/{group_id}/logs:
     get:
       tags:
         - Application Group
@@ -394,7 +394,7 @@ paths:
         500:
           description: Internal error
           content: {}
-  /cas/{project_id}/apps/groups/{group_id}/members:
+  /{project_id}/apps/groups/{group_id}/members:
     get:
       tags:
         - Application Group
@@ -435,7 +435,7 @@ paths:
         500:
           description: Internal error
           content: {}
-  /cas/{project_id}/apps/groups/{group_id}/models:
+  /{project_id}/apps/groups/{group_id}/models:
     get:
       tags:
         - App Group Model
@@ -541,7 +541,7 @@ paths:
         500:
           description: Internal error
           content: {}
-  /cas/{project_id}/apps/groups/{group_id}/models/{model_id}:
+  /{project_id}/apps/groups/{group_id}/models/{model_id}:
     get:
       tags:
         - App Group Model
@@ -643,7 +643,7 @@ paths:
         500:
           description: Internal error
           content: {}
-  /cas/{project_id}/apps/groups/{group_id}/models/{model_id}/operation:
+  /{project_id}/apps/groups/{group_id}/models/{model_id}/operation:
     put:
       tags:
         - App Group Model
@@ -714,7 +714,7 @@ paths:
         500:
           description: Internal error
           content: {}
-  /cas/{project_id}/apps/groups/{group_id}/model-validate:
+  /{project_id}/apps/groups/{group_id}/model-validate:
     get:
       tags:
         - App Group Model
@@ -770,7 +770,7 @@ paths:
         500:
           description: Internal error
           content: {}
-  /cas/{project_id}/apps/groups/{group_id}/model-relations:
+  /{project_id}/apps/groups/{group_id}/model-relations:
     get:
       tags:
         - Application Model Relations
@@ -926,7 +926,7 @@ paths:
         500:
           description: Internal error
           content: {}
-  /cas/{project_id}/apps/groups/{group_id}/models/{model_id}/contracts/{contract_id}:
+  /{project_id}/apps/groups/{group_id}/models/{model_id}/contracts/{contract_id}:
     get:
       tags:
         - Application Model Contracts
@@ -1101,7 +1101,7 @@ paths:
         500:
           description: Internal error
           content: {}
-  /cas/{project_id}/apps/groups/{group_id}/models/{model_id}/contracts:
+  /{project_id}/apps/groups/{group_id}/models/{model_id}/contracts:
     get:
       tags:
         - Application Model Contracts
@@ -1224,7 +1224,7 @@ paths:
         500:
           description: Internal error
           content: {}
-  /cas/{project_id}/apps/requests:
+  /{project_id}/apps/requests:
     get:
       tags:
         - App Requests
@@ -1283,7 +1283,7 @@ paths:
         500:
           description: Internal error
           content: {}
-  /cas/{project_id}/apps/requests/{request_id}:
+  /{project_id}/apps/requests/{request_id}:
     get:
       tags:
         - App Requests
@@ -1325,7 +1325,7 @@ paths:
         500:
           description: Internal error
           content: {}
-  /cas/{project_id}/apps/requests/{request_id}/operation:
+  /{project_id}/apps/requests/{request_id}/operation:
     put:
       tags:
         - App Requests
