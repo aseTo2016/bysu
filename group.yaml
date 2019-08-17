@@ -322,7 +322,6 @@ paths:
           required: true
           schema:
             type: string
-            default: myapptest01
         - name: X-Auth-Token
           in: header
           description: Authentication Token
@@ -415,7 +414,6 @@ paths:
           required: true
           schema:
             type: string
-            default: myapptest01
         - name: X-Auth-Token
           in: header
           description: Authentication Token
@@ -457,7 +455,6 @@ paths:
           required: true
           schema:
             type: string
-            default: myapptest01
         - name: name
           in: query
           description: query parameters for listing models
@@ -510,7 +507,6 @@ paths:
           required: true
           schema:
             type: string
-            default: myapptest01
         - name: X-Auth-Token
           in: header
           description: Authentication Token
@@ -565,14 +561,12 @@ paths:
           required: true
           schema:
             type: string
-            default: myapptest01
         - name: model_id
           in: path
           description: ID of an app group model
           required: true
           schema:
             type: string
-            default: mymodeltest
         - name: X-Auth-Token
           in: header
           description: Authentication Token
@@ -614,14 +608,12 @@ paths:
           required: true
           schema:
             type: string
-            default: myapptest01
         - name: model_id
           in: path
           description: ID of an app group model
           required: true
           schema:
             type: string
-            default: mymodeltest
         - name: X-Auth-Token
           in: header
           description: Authentication Token
@@ -671,14 +663,12 @@ paths:
           required: true
           schema:
             type: string
-            default: myapptest01
         - name: model_id
           in: path
           description: ID of an app group model
           required: true
           schema:
             type: string
-            default: mymodeltest
         - name: action
           in: query
           description: request operation
@@ -744,7 +734,6 @@ paths:
           required: true
           schema:
             type: string
-            example: myapptest01
         - name: name
           in: query
           required: true
@@ -801,7 +790,6 @@ paths:
           required: true
           schema:
             type: string
-            default: myapptest01
         - name: X-Auth-Token
           in: header
           description: Authentication Token
@@ -848,7 +836,6 @@ paths:
           required: true
           schema:
             type: string
-            default: myapptest01
         - name: X-Auth-Token
           in: header
           description: Authentication Token
@@ -905,7 +892,6 @@ paths:
           required: true
           schema:
             type: string
-            default: myapptest01
         - name: producer_model_id
           in: query
           description: ID of producer model
@@ -960,21 +946,18 @@ paths:
           required: true
           schema:
             type: string
-            default: myapptest01
         - name: model_id
           in: path
           description: ID of an app group model
           required: true
           schema:
             type: string
-            default: mymodeltest
         - name: contract_id
           in: path
           description: ID of an contract
           required: true
           schema:
             type: string
-            default: mycontracttest
         - name: X-Auth-Token
           in: header
           description: Authentication Token
@@ -1016,21 +999,18 @@ paths:
           required: true
           schema:
             type: string
-            default: myapptest01
         - name: model_id
           in: path
           description: ID of an app group model
           required: true
           schema:
             type: string
-            default: mymodeltest
         - name: contract_id
           in: path
           description: ID of an contract
           required: true
           schema:
             type: string
-            default: mycontracttest
         - name: X-Auth-Token
           in: header
           description: Authentication Token
@@ -1087,21 +1067,18 @@ paths:
           required: true
           schema:
             type: string
-            default: myapptest01
         - name: model_id
           in: path
           description: ID of an app group model
           required: true
           schema:
             type: string
-            default: mymodeltest
         - name: contract_id
           in: path
           description: ID of an contract
           required: true
           schema:
             type: string
-            default: mycontracttest
         - name: X-Auth-Token
           in: header
           description: Authentication Token
@@ -1144,14 +1121,12 @@ paths:
           required: true
           schema:
             type: string
-            default: myapptest01
         - name: model_id
           in: path
           description: ID of an app group model
           required: true
           schema:
             type: string
-            default: mymodeltest
         - name: X-Auth-Token
           in: header
           description: Authentication Token
@@ -1198,14 +1173,12 @@ paths:
           required: true
           schema:
             type: string
-            default: myapptest01
         - name: model_id
           in: path
           description: ID of an app group model
           required: true
           schema:
             type: string
-            default: mymodeltest
         - name: X-Auth-Token
           in: header
           description: Authentication Token
