@@ -1,0 +1,1894 @@
+openapi: 3.0.1
+info:
+  title: ServiceStage application deployment and operation management API
+  description: This is an Open API descriptor for Huawei ServiceStage application  deployment.
+    The operations cover the provsining life-cycle management broker APIs that allow
+    users to create, update and delete an application instance on the Huawei cloud.
+  contact:
+    email: paul.chen1@huawei.com
+  version: "2.13"
+externalDocs:
+  description: Find out more about CAS service broker
+  url: http://office-service.huawei.com/DocView.aspx?did=bd722989-3955-46f7-b79f-19f4833807c6
+servers:
+  - url: https://servicestage.{region}.myhuaweicloud.com/v1
+paths:
+  /{project_id}/apps/groups:
+    get:
+      tags:
+        - Application Group
+      summary: get all application groups
+      description: Get all application groups for a given project ID
+      operationId: getGroups
+      parameters:
+        - name: project_id
+          in: path
+          description: ID of the tenant's project on the cloud
+          required: true
+          schema:
+            type: string
+        - name: X-Auth-Token
+          in: header
+          description: Authentication Token
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/groups'
+        401:
+          description: Invalid username/password supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+        500:
+          description: Internal error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+    post:
+      tags:
+        - Application Group
+      summary: create an application group
+      description: This is to create a application group
+      operationId: createGroup
+      parameters:
+        - name: project_id
+          in: path
+          description: ID of the tenant's project on the cloud
+          required: true
+          schema:
+            type: string
+        - name: X-Auth-Token
+          in: header
+          description: Authentication Token
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Provisioning parmeters that need to be added to the application
+          group
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                parameters:
+                  $ref: '#/components/schemas/group'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/groupResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/groupResponse'
+        400:
+          description: bad request
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+        401:
+          description: Unauthorized error
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+        500:
+          description: Internal error
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+  /{project_id}/apps/groups/{group_id}:
+    get:
+      tags:
+        - Application Group
+      summary: get the application group info
+      description: This is to get a application group information
+      operationId: getAppGroup
+      parameters:
+        - name: project_id
+          in: path
+          description: ID of the tenant's project on the cloud
+          required: true
+          schema:
+            type: string
+        - name: group_id
+          in: path
+          description: ID of the application group
+          required: true
+          schema:
+            type: string
+        - name: X-Auth-Token
+          in: header
+          description: Authentication Token
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/group'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/group'
+        400:
+          description: bad request
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+        401:
+          description: Unauthorized error
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+        500:
+          description: Internal error
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+    put:
+      tags:
+        - Application Group
+      summary: update the application group
+      description: This is to update a application group
+      operationId: updateGroup
+      parameters:
+        - name: project_id
+          in: path
+          description: ID of the tenant's project on the cloud
+          required: true
+          schema:
+            type: string
+        - name: group_id
+          in: path
+          description: ID of the application group
+          required: true
+          schema:
+            type: string
+        - name: X-Auth-Token
+          in: header
+          description: Authentication Token
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Provisioning parmeters that need to be added to the application
+          group
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                parameters:
+                  $ref: '#/components/schemas/updateGroup'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/groupResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/groupResponse'
+        400:
+          description: bad request
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+        401:
+          description: Unauthorized error
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+        500:
+          description: Internal error
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+    delete:
+      tags:
+        - Application Group
+      summary: delete application group
+      description: Delete application group by group ID for a given project ID
+      operationId: deleteGroup
+      parameters:
+        - name: project_id
+          in: path
+          description: ID of the tenant's project on the cloud
+          required: true
+          schema:
+            type: string
+        - name: group_id
+          in: path
+          description: ID of the application group
+          required: true
+          schema:
+            type: string
+        - name: X-Auth-Token
+          in: header
+          description: Authentication Token
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/groupResponse'
+        401:
+          description: Invalid username/password supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+        500:
+          description: Internal error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+  /{project_id}/apps/groups/{group_id}/logs:
+    get:
+      tags:
+        - Application Group
+      summary: get application group job and task details
+      description: Task logs can optionally be filtered by job-id and/or job-type.
+        Also, it's backed by offset pagination in case there are many records.
+      operationId: getGroupTaskLogs
+      parameters:
+        - name: project_id
+          in: path
+          description: ID of the tenant's project on the cloud
+          required: true
+          schema:
+            type: string
+        - name: group_id
+          in: path
+          description: ID of an application group ID. e.g. app3gdocdeg18gkg013d
+          required: true
+          schema:
+            type: string
+            default: myapptest01
+        - name: X-Auth-Token
+          in: header
+          description: Authentication Token
+          required: true
+          schema:
+            type: string
+        - name: job_id
+          in: query
+          description: 'JobID is stored in both taskmgr_job and taskmgr_task tables:
+          e.g., JOB602d157d-e98d-49bd-bdcb-15f49f9df323'
+          schema:
+            type: string
+        - name: task_id
+          in: query
+          description: TaskID is the primary key of the taskmgr_task table, as, e.g.,
+            Task-5701507c-c9b8-44a5-9f3f-8751f92f5b7c
+          schema:
+            type: string
+        - name: job_type
+          in: query
+          description: 'Job types: PROVISION, UNPROVISION, DAILY_OPERATION, UNKNOWN'
+          style: form
+          explode: false
+          schema:
+            type: array
+            items:
+              type: string
+              default: unavailable
+              enum:
+                - PROVISION
+                - UNPROVISION
+                - DAILY_OPERATION
+                - UNKNOWN
+        - name: limit
+          in: query
+          description: An integer to limit the number of records returned
+          schema:
+            type: integer
+            default: 20
+        - name: offset
+          in: query
+          description: Retrieves records starting from offset
+          schema:
+            type: integer
+            default: 0
+        - name: orderby
+          in: query
+          description: order by data fields
+          schema:
+            type: string
+            default: lastCheck
+        - name: desc
+          in: query
+          description: order by decending or acending order
+          schema:
+            type: string
+            default: "true"
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/taskLog'
+        401:
+          description: Invalid username/password supplied
+          content: {}
+        500:
+          description: Internal error
+          content: {}
+  /{project_id}/apps/groups/{group_id}/members:
+    get:
+      tags:
+        - Application Group
+      summary: get application under application group
+      description: Get all application instances for a given group ID
+      operationId: getGroupApplications
+      parameters:
+        - name: project_id
+          in: path
+          description: ID of the tenant's project on the cloud
+          required: true
+          schema:
+            type: string
+        - name: group_id
+          in: path
+          description: ID of an application group ID. e.g. app3gdocdeg18gkg013d
+          required: true
+          schema:
+            type: string
+            default: myapptest01
+        - name: X-Auth-Token
+          in: header
+          description: Authentication Token
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/apps'
+        401:
+          description: Invalid username/password supplied
+          content: {}
+        500:
+          description: Internal error
+          content: {}
+  /{project_id}/apps/groups/{group_id}/models:
+    get:
+      tags:
+        - App Group Model
+      summary: get all application models
+      description: Get all application models for app group with a given project ID
+      operationId: getGroupModels
+      parameters:
+        - name: project_id
+          in: path
+          description: ID of the tenant's project on the cloud
+          required: true
+          schema:
+            type: string
+        - name: group_id
+          in: path
+          description: ID of an application group ID. e.g. app3gdocdeg18gkg013d
+          required: true
+          schema:
+            type: string
+            default: myapptest01
+        - name: name
+          in: query
+          description: query parameters for listing models
+          required: false
+          schema:
+            type: string
+        - name: X-Auth-Token
+          in: header
+          description: Authentication Token
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  app_models:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/model'
+        400:
+          description: Invalid Parameters
+          content: {}
+        401:
+          description: Invalid username/password supplied
+          content: {}
+        500:
+          description: Internal error
+          content: {}
+    post:
+      tags:
+        - App Group Model
+      summary: create a application model
+      description: Create a application model in a app group
+      operationId: createGroupModels
+      parameters:
+        - name: project_id
+          in: path
+          description: ID of the tenant's project on the cloud
+          required: true
+          schema:
+            type: string
+        - name: group_id
+          in: path
+          description: ID of an application group ID. e.g. app3gdocdeg18gkg013d
+          required: true
+          schema:
+            type: string
+            default: myapptest01
+        - name: X-Auth-Token
+          in: header
+          description: Authentication Token
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Provisioning parmeters that need to be added to the model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createModels'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  model_id:
+                    type: string
+              example:
+                model_id
+        400:
+          description: Invalid Parameters
+          content: {}
+        401:
+          description: Invalid username/password supplied
+          content: {}
+        500:
+          description: Internal error
+          content: {}
+  /{project_id}/apps/groups/{group_id}/models/{model_id}:
+    get:
+      tags:
+        - App Group Model
+      summary: get application model infomation
+      description: Get a application model for app group with a given model ID
+      operationId: getGroupModel
+      parameters:
+        - name: project_id
+          in: path
+          description: ID of the tenant's project on the cloud
+          required: true
+          schema:
+            type: string
+        - name: group_id
+          in: path
+          description: ID of an application group ID. e.g. app3gdocdeg18gkg013d
+          required: true
+          schema:
+            type: string
+            default: myapptest01
+        - name: model_id
+          in: path
+          description: ID of an app group model
+          required: true
+          schema:
+            type: string
+            default: mymodeltest
+        - name: X-Auth-Token
+          in: header
+          description: Authentication Token
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/model'
+        400:
+          description: Invalid Parameters
+          content: {}
+        401:
+          description: Invalid username/password supplied
+          content: {}
+        500:
+          description: Internal error
+          content: {}
+    put:
+      tags:
+        - App Group Model
+      summary: update application model
+      description: Update a application model with a given model id
+      operationId: updateGroupModel
+      parameters:
+        - name: project_id
+          in: path
+          description: ID of the tenant's project on the cloud
+          required: true
+          schema:
+            type: string
+        - name: group_id
+          in: path
+          description: ID of an application group ID. e.g. app3gdocdeg18gkg013d
+          required: true
+          schema:
+            type: string
+            default: myapptest01
+        - name: model_id
+          in: path
+          description: ID of an app group model
+          required: true
+          schema:
+            type: string
+            default: mymodeltest
+        - name: X-Auth-Token
+          in: header
+          description: Authentication Token
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Parmeters that need to be updated to the model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateModels'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/okResponse'
+        400:
+          description: Invalid Parameters
+          content: {}
+        401:
+          description: Invalid username/password supplied
+          content: {}
+        500:
+          description: Internal error
+          content: {}
+  /{project_id}/apps/groups/{group_id}/models/{model_id}/operation:
+    put:
+      tags:
+        - App Group Model
+      summary: operate a application model
+      description: Operate a application model a given model ID
+      operationId: OperateGroupModel
+      parameters:
+        - name: project_id
+          in: path
+          description: ID of the tenant's project on the cloud
+          required: true
+          schema:
+            type: string
+        - name: group_id
+          in: path
+          description: ID of an application group ID. e.g. app3gdocdeg18gkg013d
+          required: true
+          schema:
+            type: string
+            default: myapptest01
+        - name: model_id
+          in: path
+          description: ID of an app group model
+          required: true
+          schema:
+            type: string
+            default: mymodeltest
+        - name: action
+          in: query
+          description: request operation
+          required: true
+          schema:
+            type: string
+            enum:
+              - PUBLISH
+              - DEPRECATE
+              - DEPLOY
+              - DELETE
+        - name: X-Auth-Token
+          in: header
+          description: Authentication Token
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Description of the operation
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                description:
+                  type: string
+              example:
+                description: publish model
+        required: false
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/operateModelResponse'
+        400:
+          description: Invalid Parameters
+          content: {}
+        401:
+          description: Invalid username/password supplied
+          content: {}
+        500:
+          description: Internal error
+          content: {}
+  /{project_id}/apps/groups/{group_id}/model-validate:
+    get:
+      tags:
+        - App Group Model
+      summary: validate app model name and version
+      description: Validate if app model is acceptable with specified name or (name & version)
+      operationId: allocateGroupModel
+      parameters:
+        - name: project_id
+          in: path
+          description: ID of the tenant's project on the cloud
+          required: true
+          schema:
+            type: string
+        - name: group_id
+          in: path
+          description: ID of an application group ID. e.g. app3gdocdeg18gkg013d
+          required: true
+          schema:
+            type: string
+            example: myapptest01
+        - name: name
+          in: query
+          required: true
+          description: name of model
+          schema:
+            type: string
+            example: name
+        - name: version
+          in: query
+          required: false
+          description: version of model
+          schema:
+            type: string
+            example: version
+        - name: X-Auth-Token
+          in: header
+          description: Authentication Token
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/appModelValidateResponse'
+        400:
+          description: Invalid Parameters
+          content: {}
+        401:
+          description: Invalid username/password supplied
+          content: {}
+        500:
+          description: Internal error
+          content: {}
+  /{project_id}/apps/groups/{group_id}/model-relations:
+    get:
+      tags:
+        - Application Model Relations
+      summary: get model relations
+      description: List application group model relations
+      operationId: listGroupModelRelations
+      parameters:
+        - name: project_id
+          in: path
+          description: ID of the tenant's project on the cloud
+          required: true
+          schema:
+            type: string
+        - name: group_id
+          in: path
+          description: ID of an application group ID. e.g. app3gdocdeg18gkg013d
+          required: true
+          schema:
+            type: string
+            default: myapptest01
+        - name: X-Auth-Token
+          in: header
+          description: Authentication Token
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  app_model_relations:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/modelRelation'
+        400:
+          description: Invalid Parameters
+          content: {}
+        401:
+          description: Invalid username/password supplied
+          content: {}
+        500:
+          description: Internal error
+          content: {}
+    post:
+      tags:
+        - Application Model Relations
+      summary: add model relation
+      description: Relate producer model and consumer model
+      operationId: relateGroupModel
+      parameters:
+        - name: project_id
+          in: path
+          description: ID of the tenant's project on the cloud
+          required: true
+          schema:
+            type: string
+        - name: group_id
+          in: path
+          description: ID of an application group ID. e.g. app3gdocdeg18gkg013d
+          required: true
+          schema:
+            type: string
+            default: myapptest01
+        - name: X-Auth-Token
+          in: header
+          description: Authentication Token
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: model is of producer and consumer
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                producer_model_id:
+                  type: string
+                consumer_model_id:
+                  type: string
+            example:
+              producer_model_id: 58f75f14-a20b-4a6f-bbfa-72c0efd49759
+              consumer_model_id: 102fb122-58d7-4592-be5a-c6c317eb2074
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/okResponse'
+        400:
+          description: Invalid Parameters
+          content: {}
+        401:
+          description: Invalid username/password supplied
+          content: {}
+        500:
+          description: Internal error
+          content: {}
+    delete:
+      tags:
+        - Application Model Relations
+      summary: delete model relation
+      description: Delete Relation for producer model and consumer model
+      operationId: deleteRelationGroupModel
+      parameters:
+        - name: project_id
+          in: path
+          description: ID of the tenant's project on the cloud
+          required: true
+          schema:
+            type: string
+        - name: group_id
+          in: path
+          description: ID of an application group ID. e.g. app3gdocdeg18gkg013d
+          required: true
+          schema:
+            type: string
+            default: myapptest01
+        - name: producer_model_id
+          in: query
+          description: ID of producer model
+          required: true
+          schema:
+            type: string
+        - name: consumer_model_id
+          in: query
+          description: ID of consumer model
+          required: true
+          schema:
+            type: string
+        - name: X-Auth-Token
+          in: header
+          description: Authentication Token
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/okResponse'
+        400:
+          description: Invalid Parameters
+          content: {}
+        401:
+          description: Invalid username/password supplied
+          content: {}
+        500:
+          description: Internal error
+          content: {}
+  /{project_id}/apps/groups/{group_id}/models/{model_id}/contracts/{contract_id}:
+    get:
+      tags:
+        - Application Model Contracts
+      summary: get contract information
+      description: get specified Contract
+      operationId: getModelContract
+      parameters:
+        - name: project_id
+          in: path
+          description: ID of the tenant's project on the cloud
+          required: true
+          schema:
+            type: string
+        - name: group_id
+          in: path
+          description: ID of an application group ID. e.g. app3gdocdeg18gkg013d
+          required: true
+          schema:
+            type: string
+            default: myapptest01
+        - name: model_id
+          in: path
+          description: ID of an app group model
+          required: true
+          schema:
+            type: string
+            default: mymodeltest
+        - name: contract_id
+          in: path
+          description: ID of an contract
+          required: true
+          schema:
+            type: string
+            default: mycontracttest
+        - name: X-Auth-Token
+          in: header
+          description: Authentication Token
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/contract'
+        400:
+          description: Invalid Parameters
+          content: {}
+        401:
+          description: Invalid username/password supplied
+          content: {}
+        500:
+          description: Internal error
+          content: {}
+    put:
+      tags:
+        - Application Model Contracts
+      summary: update contract
+      description: Update a specified Contract
+      operationId: updateModelContract
+      parameters:
+        - name: project_id
+          in: path
+          description: ID of the tenant's project on the cloud
+          required: true
+          schema:
+            type: string
+        - name: group_id
+          in: path
+          description: ID of an application group ID. e.g. app3gdocdeg18gkg013d
+          required: true
+          schema:
+            type: string
+            default: myapptest01
+        - name: model_id
+          in: path
+          description: ID of an app group model
+          required: true
+          schema:
+            type: string
+            default: mymodeltest
+        - name: contract_id
+          in: path
+          description: ID of an contract
+          required: true
+          schema:
+            type: string
+            default: mycontracttest
+        - name: X-Auth-Token
+          in: header
+          description: Authentication Token
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: update content of contract
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                path:
+                  type: string
+            example:
+              name: contract_name
+              path: contract_path
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/okResponse'
+        400:
+          description: Invalid Parameters
+          content: {}
+        401:
+          description: Invalid username/password supplied
+          content: {}
+        500:
+          description: Internal error
+          content: {}
+    delete:
+      tags:
+        - Application Model Contracts
+      summary: delete a contrat
+      description: Delete a specified Contract
+      operationId: deleteModelContract
+      parameters:
+        - name: project_id
+          in: path
+          description: ID of the tenant's project on the cloud
+          required: true
+          schema:
+            type: string
+        - name: group_id
+          in: path
+          description: ID of an application group ID. e.g. app3gdocdeg18gkg013d
+          required: true
+          schema:
+            type: string
+            default: myapptest01
+        - name: model_id
+          in: path
+          description: ID of an app group model
+          required: true
+          schema:
+            type: string
+            default: mymodeltest
+        - name: contract_id
+          in: path
+          description: ID of an contract
+          required: true
+          schema:
+            type: string
+            default: mycontracttest
+        - name: X-Auth-Token
+          in: header
+          description: Authentication Token
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/okResponse'
+        400:
+          description: Invalid Parameters
+          content: {}
+        401:
+          description: Invalid username/password supplied
+          content: {}
+        500:
+          description: Internal error
+          content: {}
+  /{project_id}/apps/groups/{group_id}/models/{model_id}/contracts:
+    get:
+      tags:
+        - Application Model Contracts
+      summary: get contracts in a group model
+      description: Get Contracts in a group model
+      operationId: getModelContracts
+      parameters:
+        - name: project_id
+          in: path
+          description: ID of the tenant's project on the cloud
+          required: true
+          schema:
+            type: string
+        - name: group_id
+          in: path
+          description: ID of an application group ID. e.g. app3gdocdeg18gkg013d
+          required: true
+          schema:
+            type: string
+            default: myapptest01
+        - name: model_id
+          in: path
+          description: ID of an app group model
+          required: true
+          schema:
+            type: string
+            default: mymodeltest
+        - name: X-Auth-Token
+          in: header
+          description: Authentication Token
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  app_contracts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/contract'
+        400:
+          description: Invalid Parameters
+          content: {}
+        401:
+          description: Invalid username/password supplied
+          content: {}
+        500:
+          description: Internal error
+          content: {}
+    post:
+      tags:
+        - Application Model Contracts
+      summary: create a contract
+      description: Create contract for a group model
+      operationId: createModelContract
+      parameters:
+        - name: project_id
+          in: path
+          description: ID of the tenant's project on the cloud
+          required: true
+          schema:
+            type: string
+        - name: group_id
+          in: path
+          description: ID of an application group ID. e.g. app3gdocdeg18gkg013d
+          required: true
+          schema:
+            type: string
+            default: myapptest01
+        - name: model_id
+          in: path
+          description: ID of an app group model
+          required: true
+          schema:
+            type: string
+            default: mymodeltest
+        - name: X-Auth-Token
+          in: header
+          description: Authentication Token
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: contract of app model
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                contracts:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      path:
+                        type: string
+              example:
+                contracts:
+                  - name: name1
+                    path: path1
+                  - name: name2
+                    path: path2
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createAppContractResponse'
+        400:
+          description: Invalid Parameters
+          content: {}
+        401:
+          description: Invalid username/password supplied
+          content: {}
+        500:
+          description: Internal error
+          content: {}
+  /{project_id}/apps/requests:
+    get:
+      tags:
+        - App Requests
+      summary: get applying requests
+      description: Get App Requests
+      operationId: getAppRequests
+      parameters:
+        - name: project_id
+          in: path
+          description: ID of the tenant's project on the cloud
+          required: true
+          schema:
+            type: string
+        - name: request_type
+          in: query
+          description: request type
+          required: false
+          schema:
+            $ref: '#/components/schemas/appRequestType'
+        - name: request_object_type
+          in: query
+          description: request object type
+          required: false
+          schema:
+            $ref: '#/components/schemas/appRequestObjectType'
+        - name: status
+          in: query
+          description: request status
+          required: false
+          schema:
+            $ref: '#/components/schemas/appRequestStatus'
+        - name: X-Auth-Token
+          in: header
+          description: Authentication Token
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  app_requests:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/appRequest'
+        400:
+          description: Invalid Parameters
+          content: {}
+        401:
+          description: Invalid username/password supplied
+          content: {}
+        500:
+          description: Internal error
+          content: {}
+  /{project_id}/apps/requests/{request_id}:
+    get:
+      tags:
+        - App Requests
+      summary: get apply requet infomation
+      description: Get App Request
+      operationId: getAppRequest
+      parameters:
+        - name: project_id
+          in: path
+          description: ID of the tenant's project on the cloud
+          required: true
+          schema:
+            type: string
+        - name: request_id
+          in: path
+          description: id of request
+          required: true
+          schema:
+            type: string
+        - name: X-Auth-Token
+          in: header
+          description: Authentication Token
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/appRequest'
+        400:
+          description: Invalid Parameters
+          content: {}
+        401:
+          description: Invalid username/password supplied
+          content: {}
+        500:
+          description: Internal error
+          content: {}
+  /{project_id}/apps/requests/{request_id}/operation:
+    put:
+      tags:
+        - App Requests
+      summary: accecpt or reject a request
+      description: Operate App Request
+      operationId: OperateAppRequest
+      parameters:
+        - name: project_id
+          in: path
+          description: ID of the tenant's project on the cloud
+          required: true
+          schema:
+            type: string
+        - name: request_id
+          in: path
+          description: id of request
+          required: true
+          schema:
+            type: string
+        - name: action
+          in: query
+          description: request operation
+          required: true
+          schema:
+            type: string
+            enum:
+              - APPROVE
+              - REJECT
+        - name: X-Auth-Token
+          in: header
+          description: Authentication Token
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/okResponse'
+        400:
+          description: Invalid Parameters
+          content: {}
+        401:
+          description: Invalid username/password supplied
+          content: {}
+        500:
+          description: Internal error
+          content: {}
+components:
+  schemas:
+    okResponse:
+      type: object
+      properties:
+        Message:
+          type: string
+      example:
+        Message: OK
+    errorResponse:
+      required:
+        - error_code
+        - error_msg
+      type: object
+      properties:
+        error_code:
+          type: string
+        error_msg:
+          type: string
+        error_detail:
+          type: string
+        suggestion:
+          type: string
+      example:
+        error_code: SVCSTG.CAS.{HTTP_CODE}1000
+        error_mssage: Some error messages
+        error_detail: Error details.
+        suggestion: Contact Huawei Cloud Support.
+    taskLog:
+      type: object
+      properties:
+        job_id:
+          type: string
+        job_name:
+          type: string
+        job_type:
+          type: string
+        service_instance_id:
+          type: string
+        project_id:
+          type: string
+        order_id:
+          type: string
+        job_desc:
+          type: string
+        execution_status:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        created_by:
+          type: string
+        task_id:
+          type: string
+        task_type:
+          type: string
+        task_index:
+          type: string
+        task_name:
+          type: string
+        task_status:
+          type: string
+        last_health_check:
+          type: string
+          format: date-time
+        owner_id:
+          type: string
+    apps:
+      type: object
+      properties:
+        instance_id:
+          type: string
+        project_id:
+          type: string
+        name:
+          type: string
+        version:
+          type: string
+        display_name:
+          type: string
+        app_type:
+          type: string
+        platform_type:
+          type: string
+        url:
+          type: string
+        replica:
+          type: integer
+        status:
+          type: string
+          description: Current Application Status
+          enum:
+            - INITIALIZING
+            - FAILED
+            - RUNNING
+            - DOWN
+            - DELETING
+            - DELETED
+            - STAGING
+            - STARTING
+            - STOPPING
+            - STOPPED
+            - RESTARTING
+            - PENDING
+            - PARTIALLY_FAILED
+            - UNKNOWN
+        reason:
+          type: string
+          description: reason for application partially failed
+        created_at:
+          type: string
+          format: date-time
+        last_update_at:
+          type: string
+          format: date-time
+        assembling_job_id:
+          type: string
+    platforms:
+      type: object
+      properties:
+        id:
+          type: string
+        parameters:
+          type: object
+          additionalProperties:
+            type: string
+      example:
+        vpc:
+          id: 32d823b8-7980-4690-8be0-a03018cc3756
+        cce:
+          id: 42d7c666-c0e6-11e8-8c28-0255ac101f1d
+          parameters:
+            namespace: default
+        elb:
+          id: a6e76b8a-6fe1-4a7f-9f17-95b473d34f2c
+    groups:
+      type: object
+      properties:
+        group_id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        type:
+          type: string
+        label:
+          type: string
+        project_id:
+          type: string
+        created_at:
+          type: string
+        last_update_at:
+          type: string
+        status:
+          type: string
+        platforms:
+          $ref: '#/components/schemas/platforms'
+        configuration:
+          type: object
+          additionalProperties: true
+      example:
+        name: servicecomb-group
+        description: my group description
+        type: servicecomb
+        label: dev
+        group_id: e087a0b9-7ebe-455b-8ecc-99bf8d88c054
+        project_id: 8654c759609f48d5aa89063e51c00df7
+        created_at: '2019-03-22T02:42:29Z'
+        last_update_at: '2019-03-22T02:42:29Z'
+        status: READY
+        platforms:
+          vpc:
+            id: 8ab8374e-e8d5-4313-82a9-2fa17632ea62
+            parameters:
+              subnet:
+                id: 7d6feb11-6408-49be-95eb-c54d2e3ce235
+          cse:
+            id: default
+          apm:
+            id: servicecomb-group
+        configuration:
+          cse:
+            name: Cloud Service Engine
+    group:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        type:
+          type: string
+        label:
+          type: string
+        platforms:
+          $ref: '#/components/schemas/platforms'
+        configuration:
+          type: object
+          additionalProperties: true
+      example:
+        name: servicecomb-group
+        description: my group description
+        type: servicecomb
+        label: dev
+        platforms:
+          vpc:
+            id: 8ab8374e-e8d5-4313-82a9-2fa17632ea62
+            parameters:
+              subnet:
+                id: 7d6feb11-6408-49be-95eb-c54d2e3ce235
+          cse:
+            id: default
+          apm:
+            id: servicecomb-group
+        configuration:
+          enterprise_project_id: 0
+          env:
+            - name: env1
+              value: val1
+    groupResponse:
+      type: object
+      properties:
+        group_id:
+          type: string
+        job_id:
+          type: string
+        message:
+          type: string
+      example:
+        group_id: e087a0b9-7ebe-455b-8ecc-99bf8d88c054
+        job_id: JOB228053f1-b616-45f8-ba17-50ad8078a4aa
+        message: group in creating
+    updateGroup:
+      type: object
+      properties:
+        description:
+          type: string
+        label:
+          type: string
+        configuration:
+          type: object
+          additionalProperties: true
+      example:
+        description: my group description
+        label: dev
+        configuration:
+          env:
+            - name: env1
+              value: val1
+    createModels:
+      type: object
+      required:
+        - name
+        - version
+        - source
+      properties:
+        name:
+          type: string
+          nullable: false
+        version:
+          type: string
+          nullable: false
+        description:
+          type: string
+        source:
+          $ref: '#/components/schemas/source'
+        contracts:
+          type: array
+          items:
+            type: object
+      example:
+        name: model_name
+        version: model_version
+        description: model_description
+        source:
+          repo_auth: auth_name
+          repo_url: https://xxx.git
+          repo_ref: master
+          type: GitHub
+        contracts: []
+    source:
+      type: object
+      required:
+        - repo_auth
+        - repo_url
+        - repo_ref
+        - type
+      properties:
+        repo_auth:
+          type: string
+          description: auth name of repository
+        repo_url:
+          type: string
+        repo_ref:
+          type: string
+          default: master
+          description: branch or tag or commit sha
+        type:
+          type: string
+          enum:
+            - GitHub
+            - Gitlab
+            - Gitee
+            - DevCloud
+            - BitBucket
+
+    updateModels:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: false
+        version:
+          type: string
+          nullable: false
+        description:
+          type: string
+        source:
+          $ref: '#/components/schemas/source'
+      example:
+        name: model-example
+        version: model-version
+        description: model-description
+        source:
+          repo_url: https://github.com/petstore/petserver.git
+          proj_branch: master
+          type: GitHub
+    model:
+      type: object
+      properties:
+        group_id:
+          type: string
+        name:
+          type: string
+        create_at:
+          type: string
+        version:
+          type: string
+        description:
+          type: string
+        source:
+          $ref: '#/components/schemas/source'
+        model_id:
+          type: string
+        status:
+          type: string
+          enum:
+            - DRAFT
+            - PENDING_PUBLISH
+            - NOT_DEPLOYED
+            - DEPLOYED
+            - PENDING_DEPRECATE
+            - DEPRECATED
+            - PENDING_DELETE
+      example:
+        group_id: 4bd44bc7-fe08-4d46-8406-b982f7a982d9
+        model_id: 14c6c21f-b490-48c3-9542-5d5cee111134
+        name: model-example
+        created_at: 2019-06-25T12:40:46Z
+        version: model-version
+        description: model-description
+        source: {}
+        status: DRAFT
+    modelRelation:
+      type: object
+      properties:
+        producer_model_id:
+          type: string
+        consumer_model_id:
+          type: string
+      example:
+        producer_model_id: 58f75f14-a20b-4a6f-bbfa-72c0efd49759
+        consumer_model_id: 102fb122-58d7-4592-be5a-c6c317eb2074
+    contract:
+      type: object
+      properties:
+        name:
+          type: string
+        path:
+          type: string
+        contract_id:
+          type: string
+        model_id:
+          type: string
+      example:
+        name: contract_name
+        path: contract_path
+        contract_id: 4a671e8b-70fb-4530-bb11-8b45cb91ff8d
+        model_id: 58f75f14-a20b-4a6f-bbfa-72c0efd49759
+    appRequest:
+      type: object
+      properties:
+        approver:
+          type: string
+        requester:
+          type: string
+        updated_at:
+          type: string
+        request_type:
+          $ref: '#/components/schemas/appRequestType'
+        request_object_id:
+          type: string
+        request_object_type:
+          $ref: '#/components/schemas/appRequestObjectType'
+        request_object_info:
+          type: object
+          properties:
+            model_name:
+              type: string
+            model_version:
+              type: string
+            model_group_id:
+              type: string
+            model_group_name:
+              type: string
+            enterprise_project_id:
+              type: string
+        project_id:
+          type: string
+        created_at:
+          type: string
+        description:
+          type: string
+        status:
+          $ref: '#/components/schemas/appRequestStatus'
+      example:
+        approver: usera
+        requester: root
+        created_at: '2019-06-26T02:44:59Z'
+        updated_at: '2019-06-26T02:44:59Z'
+        request_type: PUBLISH_APPROVAL
+        request_object_id: 14c6c21f-b490-48c3-9542-5d5cee111134
+        project_id: a85103e0a3c44a72b5abfdde50b424cb
+        description: model-example model-version DRAFT
+        request_object_type: APP_MODEL
+        request_object_info:
+          model_name: model3
+          model_version: 1.0
+          model_group_id: 790f511b-93b5-4a4f-afc9-650b3c9d54eb
+          model_group_name: group_name
+          enterprise_project_id: epid
+        request_id: 7fbecd2d-bcc9-4dcd-a860-f3a1bac45c14
+        status: PENDING
+    appRequestType:
+      type: string
+      enum:
+        - PUBLISH_APPROVAL
+        - DEPRECATE_APPROVAL
+        - DELETE_APPROVAL
+    appRequestStatus:
+      type: string
+      enum:
+        - PENDING
+        - APPROVED
+        - REJECTED
+    appRequestObjectType:
+      type: string
+      enum:
+        - APP_MODEL
+    appModelValidateResponse:
+      type: object
+      properties:
+        result:
+          type: boolean
+      example:
+        result: true
+    createAppContractResponse:
+      type: object
+      properties:
+        contract_ids:
+          type: array
+          items:
+            type: string
+      example:
+        contract_ids:
+          - 4a671e8b-70fb-4530-bb11-8b45cb91ff8d
+    operateModelResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        model_id:
+          type: string
+      example:
+        request_id: testrequestid
+        model_id: testmodelid
+
+
